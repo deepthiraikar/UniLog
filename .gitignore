@@ -30,11 +30,8 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*.local
-
-# sqlite database - we allow committing dev.db or keep it ignored if remote build seeds it
-# prisma/dev.db
 
 # vercel
 .vercel

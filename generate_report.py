@@ -82,7 +82,7 @@ def build_word_report(output_path):
         ("Degree & Department", "B.Tech in Information Science and Engineering"),
         ("Institution", "NMAM Institute of Technology, Nitte"),
         ("Faculty Evaluator", "Dr. Jason Elroy Martis"),
-        ("GitHub Repository", "[Insert GitHub Repository URL]"),
+        ("GitHub Repository", "https://github.com/deepthiraikar/unilog"),
         ("Date of Submission", "30/10/2026"),
     ]
 
