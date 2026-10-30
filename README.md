@@ -103,8 +103,6 @@ Verify `.env` exists in the project root:
 ```env
 DATABASE_URL="file:./dev.db"
 AUTH_SECRET="unilog-college-attendance-management-super-secret-key-32chars"
-NEXTAUTH_SECRET="unilog-college-attendance-management-super-secret-key-32chars"
-NEXTAUTH_URL="http://localhost:3000"
 ```
 
 ### Step 3: Initialize Database & Seed Demo Data

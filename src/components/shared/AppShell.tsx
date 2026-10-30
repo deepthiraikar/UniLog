@@ -73,6 +73,15 @@ export function AppShell({ user, children }: AppShellProps) {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut({ redirect: false });
+    } catch (e) {
+      // ignore
+    }
+    window.location.href = "/login";
+  };
+
   const markNotificationAsRead = async (id?: string) => {
     try {
       if (id) {
@@ -197,7 +206,7 @@ export function AppShell({ user, children }: AppShellProps) {
               </div>
             </div>
             <button
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={handleSignOut}
               title="Sign Out"
               className="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-200 transition-colors cursor-pointer"
             >
@@ -371,6 +380,14 @@ export function AppShell({ user, children }: AppShellProps) {
                 </Link>
               );
             })}
+
+            <button
+              onClick={handleSignOut}
+              className="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-medium text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer text-left"
+            >
+              <LogOut className="w-[18px] h-[18px]" />
+              <span>Sign Out</span>
+            </button>
           </div>
         )}
 
