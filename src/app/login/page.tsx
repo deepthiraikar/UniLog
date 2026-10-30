@@ -16,7 +16,12 @@ function LoginForm() {
   const [activeLoginType, setActiveLoginType] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const executeSignIn = async (userEmail: string, userPass: string, roleLabel?: string) => {
+  const executeSignIn = async (
+    userEmail: string,
+    userPass: string,
+    roleLabel?: string,
+    targetRolePath?: string
+  ) => {
     setErrorMsg("");
     setLoading(true);
 
@@ -28,16 +33,24 @@ function LoginForm() {
       });
 
       if (res?.error) {
+        console.error("[Login] Sign-in failed:", res.error);
         setErrorMsg("Invalid credentials. Please verify your email and password.");
         toast.error("Authentication failed. Please check your credentials.");
         setLoading(false);
         setActiveLoginType(null);
       } else {
         toast.success(roleLabel ? `Signed in as ${roleLabel}! Redirecting...` : "Login successful! Redirecting...");
-        // Use window.location to ensure fresh session cookies are sent with next request
-        window.location.href = callbackUrl || "/dashboard";
+        
+        let destination = callbackUrl && callbackUrl !== "/login" ? callbackUrl : "/dashboard";
+        if (targetRolePath && destination === "/dashboard") {
+          destination = targetRolePath;
+        }
+
+        // Full page redirect ensures new auth cookies are attached to all subsequent SSR queries
+        window.location.href = destination;
       }
     } catch (err: any) {
+      console.error("[Login] Sign-in error:", err);
       setErrorMsg("An unexpected error occurred during sign in.");
       toast.error("Error signing in. Try again.");
       setLoading(false);
@@ -48,14 +61,26 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setActiveLoginType("manual");
-    await executeSignIn(email, password);
+
+    let target = "/dashboard";
+    const em = email.toLowerCase();
+    if (em.includes("admin")) target = "/admin";
+    else if (em.includes("faculty")) target = "/faculty";
+    else if (em.includes("aarav") || em.includes("rohan") || em.includes("student")) target = "/student";
+
+    await executeSignIn(email, password, undefined, target);
   };
 
-  const handleInstantDemoLogin = async (demoEmail: string, roleName: string, typeKey: string) => {
+  const handleInstantDemoLogin = async (
+    demoEmail: string,
+    roleName: string,
+    typeKey: string,
+    directPath: string
+  ) => {
     setEmail(demoEmail);
     setPassword("password123");
     setActiveLoginType(typeKey);
-    await executeSignIn(demoEmail, "password123", roleName);
+    await executeSignIn(demoEmail, "password123", roleName, directPath);
   };
 
   return (
@@ -162,7 +187,7 @@ function LoginForm() {
             <button
               type="button"
               disabled={loading}
-              onClick={() => handleInstantDemoLogin("admin@college.edu", "Admin", "admin")}
+              onClick={() => handleInstantDemoLogin("admin@college.edu", "Admin", "admin", "/admin")}
               className="w-full rounded-xl py-2.5 px-3.5 text-xs flex items-center justify-between border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-900 dark:text-slate-100 text-left transition-all cursor-pointer disabled:opacity-50"
             >
               <div className="flex items-center gap-2.5 min-w-0">
@@ -193,7 +218,7 @@ function LoginForm() {
             <button
               type="button"
               disabled={loading}
-              onClick={() => handleInstantDemoLogin("faculty@college.edu", "Faculty", "faculty")}
+              onClick={() => handleInstantDemoLogin("faculty@college.edu", "Faculty", "faculty", "/faculty")}
               className="w-full rounded-xl py-2.5 px-3.5 text-xs flex items-center justify-between border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-900 dark:text-slate-100 text-left transition-all cursor-pointer disabled:opacity-50"
             >
               <div className="flex items-center gap-2.5 min-w-0">
@@ -224,7 +249,7 @@ function LoginForm() {
             <button
               type="button"
               disabled={loading}
-              onClick={() => handleInstantDemoLogin("aarav@college.edu", "Student", "student")}
+              onClick={() => handleInstantDemoLogin("aarav@college.edu", "Student", "student", "/student")}
               className="w-full rounded-xl py-2.5 px-3.5 text-xs flex items-center justify-between border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-800/40 hover:bg-slate-100 dark:hover:bg-slate-800 hover:border-slate-300 dark:hover:border-slate-700 text-slate-900 dark:text-slate-100 text-left transition-all cursor-pointer disabled:opacity-50"
             >
               <div className="flex items-center gap-2.5 min-w-0">

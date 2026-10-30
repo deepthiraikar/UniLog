@@ -3,10 +3,29 @@ import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({
-    req,
-    secret: process.env.AUTH_SECRET || "unilog-college-attendance-management-super-secret-key-32chars",
-  });
+  const secret = process.env.AUTH_SECRET || "unilog-college-attendance-management-super-secret-key-32chars";
+
+  // Check if secure cookie exists or if request is HTTPS
+  const hasSecureAuthjs = req.cookies.has("__Secure-authjs.session-token");
+  const hasSecureNextAuth = req.cookies.has("__Secure-next-auth.session-token");
+  const isHttps = req.nextUrl.protocol === "https:" || req.headers.get("x-forwarded-proto") === "https" || req.url.startsWith("https:");
+
+  let token = null;
+
+  if (hasSecureAuthjs) {
+    token = await getToken({ req, secret, secureCookie: true, cookieName: "__Secure-authjs.session-token" });
+  } else if (hasSecureNextAuth) {
+    token = await getToken({ req, secret, secureCookie: true, cookieName: "__Secure-next-auth.session-token" });
+  } else if (req.cookies.has("authjs.session-token")) {
+    token = await getToken({ req, secret, secureCookie: false, cookieName: "authjs.session-token" });
+  } else if (req.cookies.has("next-auth.session-token")) {
+    token = await getToken({ req, secret, secureCookie: false, cookieName: "next-auth.session-token" });
+  } else {
+    token = await getToken({ req, secret, secureCookie: isHttps });
+    if (!token && isHttps) {
+      token = await getToken({ req, secret, secureCookie: false });
+    }
+  }
 
   const { pathname } = req.nextUrl;
 

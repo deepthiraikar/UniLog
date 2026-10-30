@@ -7,6 +7,9 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  outputFileTracingIncludes: {
+    "/**": ["./prisma/**/*"],
+  },
 };
 
 export default nextConfig;
