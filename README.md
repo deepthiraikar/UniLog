@@ -1,7 +1,7 @@
 # UNILOG — College Attendance Management System
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Website-2563EB?style=for-the-badge&logo=vercel)](https://unilog-iota.vercel.app)
-[![GitHub Repository](https://img.shields.io/badge/GitHub-deepthiraikar%2Funilog-181717?style=for-the-badge&logo=github)](https://github.com/deepthiraikar/unilog)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Website-2563EB?style=for-the-badge&logo=vercel)](https://uni-log.vercel.app/login)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-deepthiraikar%2FUniLog-181717?style=for-the-badge&logo=github)](https://github.com/deepthiraikar/UniLog)
 [![Next.js 15](https://img.shields.io/badge/Next.js-15.5.28-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-6.4.1-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
 
@@ -13,7 +13,8 @@ Designed under a **flat minimalist light theme design**, UNILOG delivers an ultr
 
 ## 🌐 Live Website & Professor Evaluation Link
 
-- **Live URL**: [https://unilog-iota.vercel.app](https://unilog-iota.vercel.app) *(or deploy your own 1-click instance via Vercel / Render below)*
+- **Live URL**: [https://uni-log.vercel.app/login](https://uni-log.vercel.app/login)
+- **GitHub Repository**: [https://github.com/deepthiraikar/UniLog](https://github.com/deepthiraikar/UniLog)
 - **Demo Credentials**: Preloaded with 1-Click Instant Login buttons on the `/login` page for all three roles (**Admin**, **Faculty**, and **Student**).
 - **Project Report**: Included as [`PROJECT_REPORT_UNILOG_Deepthi_N_Raikar.docx`](./PROJECT_REPORT_UNILOG_Deepthi_N_Raikar.docx) in the repository.
 

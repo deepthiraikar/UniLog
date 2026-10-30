@@ -72,7 +72,7 @@ def build_word_report(output_path):
     sub_run.font.color.rgb = RGBColor(0x47, 0x55, 0x69)
 
     # Metadata Table
-    meta_table = doc.add_table(rows=7, cols=2)
+    meta_table = doc.add_table(rows=8, cols=2)
     meta_table.alignment = WD_TABLE_ALIGNMENT.CENTER
     add_table_borders(meta_table)
 
@@ -82,7 +82,8 @@ def build_word_report(output_path):
         ("Degree & Department", "B.Tech in Information Science and Engineering"),
         ("Institution", "NMAM Institute of Technology, Nitte"),
         ("Faculty Evaluator", "Dr. Jason Elroy Martis"),
-        ("GitHub Repository", "https://github.com/deepthiraikar/unilog"),
+        ("Live Application URL", "https://uni-log.vercel.app/login"),
+        ("GitHub Repository", "https://github.com/deepthiraikar/UniLog"),
         ("Date of Submission", "30/10/2026"),
     ]
 
